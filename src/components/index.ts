@@ -13,6 +13,11 @@ export { SearchBar } from './common/SearchBar';
 export { FilterSidebar } from './common/FilterSidebar';
 export { SearchResultsHeader } from './common/SearchResultsHeader';
 export { BusCard } from './common/BusCard';
+export { BusLayout } from './common/BusLayout';
+export { Seat } from './common/Seat';
+export { SeatRow } from './common/SeatRow';
+export { BookingSummary } from './common/BookingSummary';
+export { PointsSelection } from './common/PointsSelection';
 
 // UI Components
 export { Button } from './ui/Button';

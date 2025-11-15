@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Star, Wifi, BatteryCharging, Bed, Droplets, Tv, Users, MapPin, Clock } from 'lucide-react';
 
 interface BusRoute {
@@ -34,6 +35,11 @@ interface BusCardProps {
 }
 
 export const BusCard: React.FC<BusCardProps> = ({ route }) => {
+  const navigate = useNavigate();
+
+  const handleViewSeats = () => {
+    navigate('/seat-selection', { state: { bus: route } });
+  };
   const getAmenityIcon = (amenity: string) => {
     const IconComponent = amenityIcons[amenity.toLowerCase() as keyof typeof amenityIcons] || MapPin;
     return <IconComponent className="h-4 w-4" />;
@@ -137,7 +143,10 @@ export const BusCard: React.FC<BusCardProps> = ({ route }) => {
 
       {/* Action Buttons */}
       <div className="mt-6 pt-6 border-t border-gray-200 flex flex-col sm:flex-row gap-3">
-        <button className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+        <button 
+          onClick={handleViewSeats}
+          className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+        >
           View Seats
         </button>
         <button className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors">

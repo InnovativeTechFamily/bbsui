@@ -1,4 +1,4 @@
-import { Service, Feature, Testimonial, NavLink } from '../types';
+import type { Service, Feature, Testimonial, NavLink } from '../types';
 
 export const navLinks: NavLink[] = [
   { href: '#home', label: 'Home' },

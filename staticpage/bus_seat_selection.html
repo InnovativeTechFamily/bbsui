@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seat Selection - Royal Luxury Express | SwiftBus</title>
+    <link rel="stylesheet" href="seat-selection.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <i class="fas fa-bus"></i>
+                    <span>SwiftBus</span>
+                </div>
+                <div class="nav-right">
+                    <button class="btn-back" onclick="history.back()">
+                        <i class="fas fa-arrow-left"></i> Back to Results
+                    </button>
+                    <button class="btn-icon"><i class="fas fa-user-circle"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Journey Summary Bar -->
+    <div class="journey-summary">
+        <div class="container">
+            <div class="summary-content">
+                <div class="route-info">
+                    <div class="route-points">
+                        <div class="route-point">
+                            <h3>Mumbai Central</h3>
+                            <p class="time">06:30 AM</p>
+                            <p class="date">Nov 6, 2025</p>
+                        </div>
+                        <div class="route-connector">
+                            <i class="fas fa-long-arrow-alt-right"></i>
+                            <span>3h 30m</span>
+                        </div>
+                        <div class="route-point">
+                            <h3>Pune Station</h3>
+                            <p class="time">10:00 AM</p>
+                            <p class="date">Nov 6, 2025</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bus-info-summary">
+                    <h3>Royal Luxury Express</h3>
+                    <div class="bus-details-tags">
+                        <span class="tag"><i class="fas fa-couch"></i> AC Sleeper</span>
+                        <span class="tag"><i class="fas fa-star"></i> 4.8 (245)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <div class="content-grid">
+                <!-- Left Section - Bus Details & Seat Selection -->
+                <div class="left-section">
+                    <!-- Bus Details Card -->
+                    <div class="details-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-info-circle"></i> Bus Details</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="detail-row">
+                                <span class="label">Bus Type</span>
+                                <span class="value">AC Sleeper (2+1)</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Total Seats</span>
+                                <span class="value">36 Seats</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Available</span>
+                                <span class="value available">8 Seats</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Bus Number</span>
+                                <span class="value">MH-01-AB-1234</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Amenities Card -->
+                    <div class="amenities-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-concierge-bell"></i> Amenities & Features</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="amenities-grid">
+                                <div class="amenity-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Free WiFi</span>
+                                </div>
+                                <div class="amenity-item">
+                                    <i class="fas fa-charging-station"></i>
+                                    <span>USB Charging</span>
+                                </div>
+                                <div class="amenity-item">
+                                    <i class="fas fa-bed"></i>
+                                    <span>Blankets</span>
+                                </div>
+                                <div class="amenity-item">
+                                    <i class="fas fa-tv"></i>
+                                    <span>Entertainment</span>
+                                </div>
+                                <div class="amenity-item">
+                                    <i class="fas fa-tint"></i>
+                                    <span>Water Bottle</span>
+                                </div>
+                                <div class="amenity-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Snacks</span>
+                                </div>
+                                <div class="amenity-item">
+                                    <i class="fas fa-snowflake"></i>
+                                    <span>AC</span>
+                                </div>
+                                <div class="amenity-item">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>GPS Tracking</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Boarding & Dropping Points -->
+                    <div class="points-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-map-marked-alt"></i> Boarding & Dropping Points</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="points-section">
+                                <h3>Boarding Points</h3>
+                                <div class="point-item">
+                                    <input type="radio" name="boarding" value="1" id="board1" checked>
+                                    <label for="board1">
+                                        <div class="point-info">
+                                            <strong>Mumbai Central Station</strong>
+                                            <span class="point-time">06:30 AM</span>
+                                        </div>
+                                        <p class="point-address">Platform 2, Mumbai Central Railway Station</p>
+                                    </label>
+                                </div>
+                                <div class="point-item">
+                                    <input type="radio" name="boarding" value="2" id="board2">
+                                    <label for="board2">
+                                        <div class="point-info">
+                                            <strong>Dadar West</strong>
+                                            <span class="point-time">06:50 AM</span>
+                                        </div>
+                                        <p class="point-address">Near Shivaji Park, Dadar West</p>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="points-section">
+                                <h3>Dropping Points</h3>
+                                <div class="point-item">
+                                    <input type="radio" name="dropping" value="1" id="drop1" checked>
+                                    <label for="drop1">
+                                        <div class="point-info">
+                                            <strong>Pune Railway Station</strong>
+                                            <span class="point-time">10:00 AM</span>
+                                        </div>
+                                        <p class="point-address">Main Entrance, Pune Junction</p>
+                                    </label>
+                                </div>
+                                <div class="point-item">
+                                    <input type="radio" name="dropping" value="2" id="drop2">
+                                    <label for="drop2">
+                                        <div class="point-info">
+                                            <strong>Hinjewadi IT Park</strong>
+                                            <span class="point-time">10:30 AM</span>
+                                        </div>
+                                        <p class="point-address">Phase 1, Rajiv Gandhi Infotech Park</p>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cancellation Policy -->
+                    <div class="policy-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-redo"></i> Cancellation Policy</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="policy-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Before 24 hours:</strong>
+                                    <span>100% refund (No cancellation fee)</span>
+                                </div>
+                            </div>
+                            <div class="policy-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>12-24 hours before:</strong>
+                                    <span>75% refund (25% cancellation fee)</span>
+                                </div>
+                            </div>
+                            <div class="policy-item">
+                                <i class="fas fa-times-circle"></i>
+                                <div>
+                                    <strong>Less than 12 hours:</strong>
+                                    <span>No refund</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Section - Seat Selection -->
+                <div class="right-section">
+                    <!-- Seat Selection Card -->
+                    <div class="seat-selection-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-couch"></i> Select Your Seats</h2>
+                            <div class="deck-selector">
+                                <button class="deck-btn active" data-deck="lower">Lower Deck</button>
+                                <button class="deck-btn" data-deck="upper">Upper Deck</button>
+                            </div>
+                        </div>
+
+                        <!-- Seat Legend -->
+                        <div class="seat-legend">
+                            <div class="legend-item">
+                                <div class="seat-icon available"></div>
+                                <span>Available</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="seat-icon selected"></div>
+                                <span>Selected</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="seat-icon booked"></div>
+                                <span>Booked</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="seat-icon ladies"></div>
+                                <span>Ladies Only</span>
+                            </div>
+                        </div>
+
+                        <!-- Bus Layout -->
+                        <div class="bus-layout">
+                            <div class="bus-front">
+                                <div class="driver-seat">
+                                    <i class="fas fa-steering-wheel"></i>
+                                    <span>Driver</span>
+                                </div>
+                                <div class="door-indicator">
+                                    <i class="fas fa-door-open"></i>
+                                    <span>Entry</span>
+                                </div>
+                            </div>
+
+                            <!-- Lower Deck Layout -->
+                            <div class="deck-layout lower-deck active">
+                                <div class="deck-label">Lower Deck</div>
+
+                                <!-- Row 1 -->
+                                <div class="seat-row">
+                                    <div class="seat-group left">
+                                        <div class="seat available" data-seat="L1" data-price="1899">
+                                            <span class="seat-number">L1</span>
+                                        </div>
+                                        <div class="seat available" data-seat="L2" data-price="1899">
+                                            <span class="seat-number">L2</span>
+                                        </div>
+                                    </div>
+                                    <div class="aisle"></div>
+                                    <div class="seat-group right">
+                                        <div class="seat ladies" data-seat="L3" data-price="1899">
+                                            <span class="seat-number">L3</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Row 2 -->
+                                <div class="seat-row">
+                                    <div class="seat-group left">
+                                        <div class="seat booked" data-seat="L4">
+                                            <span class="seat-number">L4</span>
+                                        </div>
+                                        <div class="seat available" data-seat="L5" data-price="1899">
+                                            <span class="seat-number">L5</span>
+                                        </div>
+                                    </div>
+                                    <div class="aisle"></div>
+                                    <div class="seat-group right">
+                                        <div class="seat ladies" data-seat="L6" data-price="1899">
+                                            <span class="seat-number">L6</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Row 3 -->
+                                <div class="seat-row">
+                                    <div class="seat-group left">
+                                        <div class="seat available" data-seat="L7" data-price="1899">
+                                            <span class="seat-number">L7</span>
+                                        </div>
+                                        <div class="seat booked" data-seat="L8">
+                                            <span class="seat-number">L8</span>
+                                        </div>
+                                    </div>
+                                    <div class="aisle"></div>
+                                    <div class="seat-group right">
+                                        <div class="seat available" data-seat="L9" data-price="1899">
+                                            <span class="seat-number">L9</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Row 4 -->
+                                <div class="seat-row">
+                                    <div class="seat-group left">
+                                        <div class="seat booked" data-seat="L10">
+                                            <span class="seat-number">L10</span>
+                                        </div>
+                                        <div class="seat available" data-seat="L11" data-price="1899">
+                                            <span class="seat-number">L11</span>
+                                        </div>
+                                    </div>
+                                    <div class="aisle"></div>
+                                    <div class="seat-group right">
+                                        <div class="seat available" data-seat="L12" data-price="1899">
+                                            <span class="seat-number">L12</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Row 5 -->
+                                <div class="seat-row">
+                                    <div class="seat-group left">
+                                        <div class="seat available" data-seat="L13" data-price="1899">
+                                            <span class="seat-number">L13</span>
+                                        </div>
+                                        <div class="seat booked" data-seat="L14">
+                                            <span class="seat-number">L14</span>
+                                        </div>
+                                    </div>
+                                    <div class="aisle"></div>
+                                    <div class="seat-group right">
+                                        <div class="seat booked" data-seat="L15">
+                                            <span class="seat-number">L15</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Last Row (5 seats) -->
+                                <div class="seat-row last-row">
+                                    <div class="seat available" data-seat="L16" data-price="1699">
+                                        <span class="seat-number">L16</span>
+                                    </div>
+                                    <div class="seat booked" data-seat="L17">
+                                        <span class="seat-number">L17</span>
+                                    </div>
+                                    <div class="seat available" data-seat="L18" data-price="1699">
+                                        <span class="seat-number">L18</span>
+                                    </div>
+                                    <div class="seat available" data-seat="L19" data-price="1699">
+                                        <span class="seat-number">L19</span>
+                                    </div>
+                                    <div class="seat booked" data-seat="L20">
+                                        <span class="seat-number">L20</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Upper Deck Layout -->
+                            <div class="deck-layout upper-deck">
+                                <div class="deck-label">Upper Deck (Premium)</div>
+
+                                <!-- Row 1 -->
+                                <div class="seat-row">
+                                    <div class="seat-group left">
+                                        <div class="seat available premium-seat" data-seat="U1" data-price="2199">
+                                            <span class="seat-number">U1</span>
+                                            <i class="fas fa-crown premium-icon"></i>
+                                        </div>
+                                        <div class="seat booked" data-seat="U2">
+                                            <span class="seat-number">U2</span>
+                                        </div>
+                                    </div>
+                                    <div class="aisle"></div>
+                                    <div class="seat-group right">
+                                        <div class="seat available premium-seat" data-seat="U3" data-price="2199">
+                                            <span class="seat-number">U3</span>
+                                            <i class="fas fa-crown premium-icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Row 2 -->
+                                <div class="seat-row">
+                                    <div class="seat-group left">
+                                        <div class="seat available premium-seat" data-seat="U4" data-price="2199">
+                                            <span class="seat-number">U4</span>
+                                            <i class="fas fa-crown premium-icon"></i>
+                                        </div>
+                                        <div class="seat booked" data-seat="U5">
+                                            <span class="seat-number">U5</span>
+                                        </div>
+                                    </div>
+                                    <div class="aisle"></div>
+                                    <div class="seat-group right">
+                                        <div class="seat available premium-seat" data-seat="U6" data-price="2199">
+                                            <span class="seat-number">U6</span>
+                                            <i class="fas fa-crown premium-icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- More rows similar pattern -->
+                                <div class="seat-row">
+                                    <div class="seat-group left">
+                                        <div class="seat booked" data-seat="U7">
+                                            <span class="seat-number">U7</span>
+                                        </div>
+                                        <div class="seat available premium-seat" data-seat="U8" data-price="2199">
+                                            <span class="seat-number">U8</span>
+                                            <i class="fas fa-crown premium-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="aisle"></div>
+                                    <div class="seat-group right">
+                                        <div class="seat booked" data-seat="U9">
+                                            <span class="seat-number">U9</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="seat-row">
+                                    <div class="seat-group left">
+                                        <div class="seat available premium-seat" data-seat="U10" data-price="2199">
+                                            <span class="seat-number">U10</span>
+                                            <i class="fas fa-crown premium-icon"></i>
+                                        </div>
+                                        <div class="seat available premium-seat" data-seat="U11" data-price="2199">
+                                            <span class="seat-number">U11</span>
+                                            <i class="fas fa-crown premium-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="aisle"></div>
+                                    <div class="seat-group right">
+                                        <div class="seat available premium-seat" data-seat="U12" data-price="2199">
+                                            <span class="seat-number">U12</span>
+                                            <i class="fas fa-crown premium-icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bus-back">
+                                <span>← Back of Bus</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking Summary (Sticky) -->
+                <div class="booking-summary">
+                    <div class="summary-card">
+                        <h3>Booking Summary</h3>
+
+                        <div class="selected-seats-section">
+                            <div class="summary-row">
+                                <span>Selected Seats:</span>
+                                <span class="seats-list" id="selectedSeatsList">None</span>
+                            </div>
+                        </div>
+
+                        <div class="price-breakdown">
+                            <div class="summary-row">
+                                <span>Base Fare</span>
+                                <span id="baseFare">₹0</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Taxes & Fees</span>
+                                <span id="taxes">₹0</span>
+                            </div>
+                            <div class="summary-row discount">
+                                <span><i class="fas fa-tag"></i> Discount</span>
+                                <span id="discount">-₹0</span>
+                            </div>
+                            <div class="summary-divider"></div>
+                            <div class="summary-row total">
+                                <span>Total Amount</span>
+                                <span id="totalAmount">₹0</span>
+                            </div>
+                        </div>
+
+                        <div class="passenger-count">
+                            <label>Number of Passengers:</label>
+                            <div class="counter">
+                                <button class="counter-btn" id="decreaseBtn">-</button>
+                                <span id="passengerCount">0</span>
+                                <button class="counter-btn" id="increaseBtn">+</button>
+                            </div>
+                        </div>
+
+                        <button class="btn-proceed" id="proceedBtn" disabled>
+                            Proceed to Payment
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+
+                        <div class="safe-payment">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Safe & Secure Payment</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="seat-selection.js"></script>
+</body>
+</html>
