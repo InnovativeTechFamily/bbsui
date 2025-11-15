@@ -1,11 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MapPin, Calendar, Users, Bus, Users as UsersIcon, Map } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { useAppStore } from '../../store';
+import { useSearchStore } from '../../store';
 import type { BookingFormData } from '../../store/appStore';
 
 export const Hero: React.FC = () => {
   const { bookingForm, setBookingForm } = useAppStore();
+  const { setSearchParams } = useSearchStore();
+  const navigate = useNavigate();
 
   const handleInputChange = (field: keyof BookingFormData, value: string | number) => {
     setBookingForm({ [field]: value });
@@ -13,8 +17,15 @@ export const Hero: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Searching buses with:', bookingForm);
-    // Add search logic here
+    // Set search parameters in search store
+    setSearchParams({
+      from: bookingForm.from,
+      to: bookingForm.to,
+      date: bookingForm.date,
+      passengers: bookingForm.passengers,
+    });
+    // Navigate to search results
+    navigate('/search');
   };
 
   return (

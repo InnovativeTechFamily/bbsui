@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - SwiftBus</title>
+    <link rel="stylesheet" href="search-results.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <i class="fas fa-bus"></i>
+                    <span>SwiftBus</span>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn-icon"><i class="fas fa-bell"></i></button>
+                    <button class="btn-icon"><i class="fas fa-user-circle"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Bar (Sticky) -->
+    <div class="search-bar-sticky">
+        <div class="container">
+            <div class="search-form-compact">
+                <div class="search-input-group">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input type="text" value="Mumbai" readonly>
+                </div>
+                <div class="search-divider">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="search-input-group">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input type="text" value="Pune" readonly>
+                </div>
+                <div class="search-input-group">
+                    <i class="fas fa-calendar"></i>
+                    <input type="date" value="2025-11-06" readonly>
+                </div>
+                <div class="search-input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="number" value="2" min="1" max="10" readonly>
+                </div>
+                <button class="btn-modify">Modify Search</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <div class="content-layout">
+                <!-- Sidebar Filters -->
+                <aside class="filters-sidebar">
+                    <div class="filter-header">
+                        <h3>Filters</h3>
+                        <button class="btn-clear">Clear All</button>
+                    </div>
+
+                    <!-- Departure Time Filter -->
+                    <div class="filter-section">
+                        <h4>Departure Time</h4>
+                        <div class="time-slots">
+                            <label class="time-slot">
+                                <input type="checkbox" name="departure" value="morning">
+                                <div class="slot-content">
+                                    <i class="fas fa-sun"></i>
+                                    <span>Morning</span>
+                                    <small>6 AM - 12 PM</small>
+                                </div>
+                            </label>
+                            <label class="time-slot">
+                                <input type="checkbox" name="departure" value="afternoon">
+                                <div class="slot-content">
+                                    <i class="fas fa-cloud-sun"></i>
+                                    <span>Afternoon</span>
+                                    <small>12 PM - 6 PM</small>
+                                </div>
+                            </label>
+                            <label class="time-slot">
+                                <input type="checkbox" name="departure" value="evening">
+                                <div class="slot-content">
+                                    <i class="fas fa-moon"></i>
+                                    <span>Evening</span>
+                                    <small>6 PM - 12 AM</small>
+                                </div>
+                            </label>
+                            <label class="time-slot">
+                                <input type="checkbox" name="departure" value="night">
+                                <div class="slot-content">
+                                    <i class="fas fa-star"></i>
+                                    <span>Night</span>
+                                    <small>12 AM - 6 AM</small>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Bus Type Filter -->
+                    <div class="filter-section">
+                        <h4>Bus Type</h4>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="bustype" value="ac">
+                                <span>AC</span>
+                                <span class="count">(15)</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="bustype" value="nonac">
+                                <span>Non-AC</span>
+                                <span class="count">(8)</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="bustype" value="sleeper">
+                                <span>Sleeper</span>
+                                <span class="count">(12)</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="bustype" value="seater">
+                                <span>Seater</span>
+                                <span class="count">(18)</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="bustype" value="luxury">
+                                <span>Luxury</span>
+                                <span class="count">(6)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Price Range Filter -->
+                    <div class="filter-section">
+                        <h4>Price Range</h4>
+                        <div class="price-range">
+                            <div class="price-display">
+                                <span>₹<span id="minPrice">300</span></span>
+                                <span>₹<span id="maxPrice">2000</span></span>
+                            </div>
+                            <input type="range" min="300" max="2000" value="300" class="price-slider" id="priceMin">
+                            <input type="range" min="300" max="2000" value="2000" class="price-slider" id="priceMax">
+                            <div class="avg-price">Average price: ₹850</div>
+                        </div>
+                    </div>
+
+                    <!-- Amenities Filter -->
+                    <div class="filter-section">
+                        <h4>Amenities</h4>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="amenities" value="wifi">
+                                <i class="fas fa-wifi"></i>
+                                <span>WiFi</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="amenities" value="charging">
+                                <i class="fas fa-charging-station"></i>
+                                <span>Charging Point</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="amenities" value="blanket">
+                                <i class="fas fa-bed"></i>
+                                <span>Blanket</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="amenities" value="water">
+                                <i class="fas fa-tint"></i>
+                                <span>Water Bottle</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="amenities" value="tv">
+                                <i class="fas fa-tv"></i>
+                                <span>TV</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Rating Filter -->
+                    <div class="filter-section">
+                        <h4>Rating</h4>
+                        <div class="rating-filter">
+                            <label class="rating-item">
+                                <input type="radio" name="rating" value="4">
+                                <span class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </span>
+                                <span>& above</span>
+                            </label>
+                            <label class="rating-item">
+                                <input type="radio" name="rating" value="3">
+                                <span class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </span>
+                                <span>& above</span>
+                            </label>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Results Section -->
+                <main class="results-section">
+                    <!-- Results Header -->
+                    <div class="results-header">
+                        <div class="results-info">
+                            <h2>Available Buses</h2>
+                            <p><span class="count-highlight">24 buses</span> found from Mumbai to Pune</p>
+                        </div>
+                        <div class="sort-options">
+                            <label>Sort by:</label>
+                            <select class="sort-select">
+                                <option value="recommended">Recommended</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="departure">Departure Time</option>
+                                <option value="duration">Duration</option>
+                                <option value="rating">Rating</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Bus Cards -->
+                    <div class="bus-listings">
+                        <!-- Premium Bus Card 1 -->
+                        <div class="bus-card premium">
+                            <div class="premium-badge">
+                                <i class="fas fa-crown"></i> PREMIUM
+                            </div>
+                            <div class="bus-card-header">
+                                <div class="bus-info">
+                                    <h3>Royal Luxury Express</h3>
+                                    <div class="bus-meta">
+                                        <span class="bus-type">AC Sleeper</span>
+                                        <span class="bus-rating">
+                                            <i class="fas fa-star"></i> 4.8
+                                            <small>(245 reviews)</small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="bus-price">
+                                    <div class="price-main">₹1,899</div>
+                                    <div class="price-per">per seat</div>
+                                </div>
+                            </div>
+
+                            <div class="bus-card-body">
+                                <div class="journey-info">
+                                    <div class="journey-point">
+                                        <div class="time">06:30 AM</div>
+                                        <div class="location">Mumbai Central</div>
+                                    </div>
+                                    <div class="journey-duration">
+                                        <div class="duration-line">
+                                            <span class="duration-dot"></span>
+                                            <span class="duration-path"></span>
+                                            <span class="duration-dot"></span>
+                                        </div>
+                                        <div class="duration-text">3h 30m</div>
+                                    </div>
+                                    <div class="journey-point">
+                                        <div class="time">10:00 AM</div>
+                                        <div class="location">Pune Station</div>
+                                    </div>
+                                </div>
+
+                                <div class="amenities-row">
+                                    <span class="amenity-tag"><i class="fas fa-wifi"></i> WiFi</span>
+                                    <span class="amenity-tag"><i class="fas fa-charging-station"></i> Charging</span>
+                                    <span class="amenity-tag"><i class="fas fa-bed"></i> Blanket</span>
+                                    <span class="amenity-tag"><i class="fas fa-tv"></i> Entertainment</span>
+                                    <span class="amenity-tag"><i class="fas fa-tint"></i> Water</span>
+                                </div>
+
+                                <div class="seats-info">
+                                    <span class="seats-available">
+                                        <i class="fas fa-couch"></i> 8 seats available
+                                    </span>
+                                    <span class="live-tracking">
+                                        <i class="fas fa-location-arrow"></i> Live Tracking
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="bus-card-footer">
+                                <button class="btn-view-seats">View Seats</button>
+                                <button class="btn-details">Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Regular Bus Card 2 -->
+                        <div class="bus-card">
+                            <div class="bus-card-header">
+                                <div class="bus-info">
+                                    <h3>SwiftBus Travels</h3>
+                                    <div class="bus-meta">
+                                        <span class="bus-type">AC Seater</span>
+                                        <span class="bus-rating">
+                                            <i class="fas fa-star"></i> 4.5
+                                            <small>(182 reviews)</small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="bus-price">
+                                    <div class="price-main">₹899</div>
+                                    <div class="price-per">per seat</div>
+                                </div>
+                            </div>
+
+                            <div class="bus-card-body">
+                                <div class="journey-info">
+                                    <div class="journey-point">
+                                        <div class="time">08:15 AM</div>
+                                        <div class="location">Dadar West</div>
+                                    </div>
+                                    <div class="journey-duration">
+                                        <div class="duration-line">
+                                            <span class="duration-dot"></span>
+                                            <span class="duration-path"></span>
+                                            <span class="duration-dot"></span>
+                                        </div>
+                                        <div class="duration-text">4h 15m</div>
+                                    </div>
+                                    <div class="journey-point">
+                                        <div class="time">12:30 PM</div>
+                                        <div class="location">Shivaji Nagar</div>
+                                    </div>
+                                </div>
+
+                                <div class="amenities-row">
+                                    <span class="amenity-tag"><i class="fas fa-wifi"></i> WiFi</span>
+                                    <span class="amenity-tag"><i class="fas fa-charging-station"></i> Charging</span>
+                                    <span class="amenity-tag"><i class="fas fa-tint"></i> Water</span>
+                                </div>
+
+                                <div class="seats-info">
+                                    <span class="seats-available">
+                                        <i class="fas fa-couch"></i> 15 seats available
+                                    </span>
+                                    <span class="cancellation-policy">
+                                        <i class="fas fa-redo"></i> Free Cancellation
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="bus-card-footer">
+                                <button class="btn-view-seats">View Seats</button>
+                                <button class="btn-details">Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Regular Bus Card 3 -->
+                        <div class="bus-card">
+                            <div class="best-price-badge">
+                                <i class="fas fa-tag"></i> BEST PRICE
+                            </div>
+                            <div class="bus-card-header">
+                                <div class="bus-info">
+                                    <h3>Express Shuttle Service</h3>
+                                    <div class="bus-meta">
+                                        <span class="bus-type">Non-AC Seater</span>
+                                        <span class="bus-rating">
+                                            <i class="fas fa-star"></i> 4.2
+                                            <small>(96 reviews)</small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="bus-price">
+                                    <div class="price-main">₹549</div>
+                                    <div class="price-per">per seat</div>
+                                </div>
+                            </div>
+
+                            <div class="bus-card-body">
+                                <div class="journey-info">
+                                    <div class="journey-point">
+                                        <div class="time">09:00 AM</div>
+                                        <div class="location">Andheri East</div>
+                                    </div>
+                                    <div class="journey-duration">
+                                        <div class="duration-line">
+                                            <span class="duration-dot"></span>
+                                            <span class="duration-path"></span>
+                                            <span class="duration-dot"></span>
+                                        </div>
+                                        <div class="duration-text">4h 45m</div>
+                                    </div>
+                                    <div class="journey-point">
+                                        <div class="time">01:45 PM</div>
+                                        <div class="location">Kothrud</div>
+                                    </div>
+                                </div>
+
+                                <div class="amenities-row">
+                                    <span class="amenity-tag"><i class="fas fa-charging-station"></i> Charging</span>
+                                    <span class="amenity-tag"><i class="fas fa-tint"></i> Water</span>
+                                </div>
+
+                                <div class="seats-info">
+                                    <span class="seats-available">
+                                        <i class="fas fa-couch"></i> 22 seats available
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="bus-card-footer">
+                                <button class="btn-view-seats">View Seats</button>
+                                <button class="btn-details">Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Premium Bus Card 4 -->
+                        <div class="bus-card premium">
+                            <div class="premium-badge">
+                                <i class="fas fa-crown"></i> PREMIUM
+                            </div>
+                            <div class="bus-card-header">
+                                <div class="bus-info">
+                                    <h3>VIP Luxury Liner</h3>
+                                    <div class="bus-meta">
+                                        <span class="bus-type">Volvo Multi-Axle</span>
+                                        <span class="bus-rating">
+                                            <i class="fas fa-star"></i> 4.9
+                                            <small>(312 reviews)</small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="bus-price">
+                                    <div class="price-main">₹2,199</div>
+                                    <div class="price-per">per seat</div>
+                                </div>
+                            </div>
+
+                            <div class="bus-card-body">
+                                <div class="journey-info">
+                                    <div class="journey-point">
+                                        <div class="time">02:00 PM</div>
+                                        <div class="location">Bandra Terminus</div>
+                                    </div>
+                                    <div class="journey-duration">
+                                        <div class="duration-line">
+                                            <span class="duration-dot"></span>
+                                            <span class="duration-path"></span>
+                                            <span class="duration-dot"></span>
+                                        </div>
+                                        <div class="duration-text">3h 15m</div>
+                                    </div>
+                                    <div class="journey-point">
+                                        <div class="time">05:15 PM</div>
+                                        <div class="location">Hinjewadi</div>
+                                    </div>
+                                </div>
+
+                                <div class="amenities-row">
+                                    <span class="amenity-tag"><i class="fas fa-wifi"></i> WiFi</span>
+                                    <span class="amenity-tag"><i class="fas fa-charging-station"></i> Charging</span>
+                                    <span class="amenity-tag"><i class="fas fa-bed"></i> Blanket</span>
+                                    <span class="amenity-tag"><i class="fas fa-tv"></i> Entertainment</span>
+                                    <span class="amenity-tag"><i class="fas fa-tint"></i> Water</span>
+                                    <span class="amenity-tag"><i class="fas fa-utensils"></i> Snacks</span>
+                                </div>
+
+                                <div class="seats-info">
+                                    <span class="seats-available">
+                                        <i class="fas fa-couch"></i> 5 seats available
+                                    </span>
+                                    <span class="live-tracking">
+                                        <i class="fas fa-location-arrow"></i> Live Tracking
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="bus-card-footer">
+                                <button class="btn-view-seats">View Seats</button>
+                                <button class="btn-details">Details</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Load More Button -->
+                    <div class="load-more-section">
+                        <button class="btn-load-more">
+                            Load More Buses <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script src="search-results.js"></script>
+</body>
+</html>
