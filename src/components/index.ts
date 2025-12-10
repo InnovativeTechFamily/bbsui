@@ -21,3 +21,8 @@ export { PointsSelection } from './common/PointsSelection';
 
 // UI Components
 export { Button } from './ui/Button';
+
+// Error Handling & Loading Components
+export { ErrorBoundary } from './ErrorBoundary';
+export { LoadingSpinner, LoadingOverlay, LoadingButton } from './Loading';
+export { ErrorDisplay, Toast, EmptyState } from './ErrorDisplay';

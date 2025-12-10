@@ -1,0 +1,787 @@
+
+================================================================================
+BUS BOOKING SYSTEM - BACKEND API DOCUMENTATION
+================================================================================
+Technology Stack: .NET Core Web API, SQL Server, Redis Cache
+Version: 1.0
+Date: November 5, 2025
+
+================================================================================
+TABLE OF CONTENTS
+================================================================================
+1. Authentication APIs
+2. Bus Search APIs
+3. Seat Availability & Layout APIs
+4. Seat Locking/Reservation APIs
+5. Booking APIs
+6. Payment APIs
+7. Booking Management APIs
+
+================================================================================
+1. AUTHENTICATION APIS
+================================================================================
+
+1.1 USER REGISTRATION
+────────────────────────────────────────────────────────────────────────────
+Endpoint: POST /api/auth/register
+Description: Register a new user account
+
+Request Payload:
+{
+  "fullName": "Rajesh Kumar",
+  "email": "rajesh.kumar@email.com",
+  "phoneNumber": "+919876543210",
+  "password": "SecurePass@123",
+  "confirmPassword": "SecurePass@123"
+}
+
+Response (200 OK):
+{
+  "success": true,
+  "message": "Registration successful",
+  "data": {
+    "userId": "USR_1234567890",
+    "email": "rajesh.kumar@email.com",
+    "fullName": "Rajesh Kumar",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "refreshToken": "rt_abc123xyz789...",
+    "expiresIn": 3600
+  }
+}
+
+────────────────────────────────────────────────────────────────────────────
+
+1.2 USER LOGIN
+────────────────────────────────────────────────────────────────────────────
+Endpoint: POST /api/auth/login
+Description: Authenticate user and get JWT token
+
+Request Payload:
+{
+  "email": "rajesh.kumar@email.com",
+  "password": "SecurePass@123"
+}
+
+Response (200 OK):
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "userId": "USR_1234567890",
+    "email": "rajesh.kumar@email.com",
+    "fullName": "Rajesh Kumar",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "refreshToken": "rt_abc123xyz789...",
+    "expiresIn": 3600,
+    "role": "Customer"
+  }
+}
+
+================================================================================
+2. BUS SEARCH APIS
+================================================================================
+
+2.1 SEARCH BUSES
+────────────────────────────────────────────────────────────────────────────
+Endpoint: POST /api/buses/search
+Description: Search available buses for a route and date
+
+Request Payload:
+{
+  "fromCityId": "CITY_MUM_001",
+  "toCityId": "CITY_PUN_002",
+  "journeyDate": "2025-11-06",
+  "passengerCount": 2
+}
+
+Response (200 OK):
+{
+  "success": true,
+  "message": "Buses found successfully",
+  "data": {
+    "searchId": "SEARCH_20251106_001",
+    "totalBuses": 24,
+    "buses": [
+      {
+        "busId": "BUS_RL_001",
+        "busName": "Royal Luxury Express",
+        "busNumber": "MH-01-AB-1234",
+        "busType": "AC Sleeper",
+        "operatorId": "OP_001",
+        "operatorName": "SwiftBus Travels",
+        "rating": 4.8,
+        "totalReviews": 245,
+        "departureTime": "06:30:00",
+        "arrivalTime": "10:00:00",
+        "duration": "03:30:00",
+        "departureLocation": "Mumbai Central Station",
+        "arrivalLocation": "Pune Railway Station",
+        "totalSeats": 36,
+        "availableSeats": 8,
+        "baseFare": 1899,
+        "isPremium": true,
+        "amenities": ["WiFi", "Charging", "Blanket", "Entertainment", "Water", "Snacks", "GPS"],
+        "cancellationPolicy": "Free cancellation before 24 hours",
+        "boardingPoints": [
+          {
+            "pointId": "BP_001",
+            "name": "Mumbai Central Station",
+            "address": "Platform 2, Mumbai Central Railway Station",
+            "time": "06:30:00",
+            "landmark": "Near Western Express Highway"
+          },
+          {
+            "pointId": "BP_002",
+            "name": "Dadar West",
+            "address": "Near Shivaji Park, Dadar West",
+            "time": "06:50:00",
+            "landmark": "Opposite Dadar Market"
+          }
+        ],
+        "droppingPoints": [
+          {
+            "pointId": "DP_001",
+            "name": "Pune Railway Station",
+            "address": "Main Entrance, Pune Junction",
+            "time": "10:00:00",
+            "landmark": "Platform 1 Exit"
+          },
+          {
+            "pointId": "DP_002",
+            "name": "Hinjewadi IT Park",
+            "address": "Phase 1, Rajiv Gandhi Infotech Park",
+            "time": "10:30:00",
+            "landmark": "Near Gate 2"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+================================================================================
+3. SEAT AVAILABILITY & LAYOUT APIS
+================================================================================
+
+3.1 GET SEAT LAYOUT
+────────────────────────────────────────────────────────────────────────────
+Endpoint: GET /api/buses/{busId}/seat-layout?journeyDate={date}
+Description: Get complete seat layout with availability status
+
+Response (200 OK):
+{
+  "success": true,
+  "message": "Seat layout retrieved successfully",
+  "data": {
+    "busId": "BUS_RL_001",
+    "busName": "Royal Luxury Express",
+    "journeyDate": "2025-11-06",
+    "layoutType": "2+1",
+    "totalSeats": 36,
+    "availableSeats": 8,
+    "decks": [
+      {
+        "deckType": "Lower",
+        "totalSeats": 20,
+        "availableSeats": 5,
+        "seats": [
+          {
+            "seatId": "SEAT_L1",
+            "seatNumber": "L1",
+            "rowNumber": 1,
+            "columnNumber": 1,
+            "deck": "Lower",
+            "seatType": "Sleeper",
+            "price": 1899,
+            "status": "Available",
+            "isLadiesOnly": false,
+            "isWindowSeat": true,
+            "position": {
+              "row": 1,
+              "column": 1,
+              "side": "Left"
+            }
+          },
+          {
+            "seatId": "SEAT_L2",
+            "seatNumber": "L2",
+            "rowNumber": 1,
+            "columnNumber": 2,
+            "deck": "Lower",
+            "seatType": "Sleeper",
+            "price": 1899,
+            "status": "Available",
+            "isLadiesOnly": false,
+            "isWindowSeat": false,
+            "position": {
+              "row": 1,
+              "column": 2,
+              "side": "Left"
+            }
+          },
+          {
+            "seatId": "SEAT_L3",
+            "seatNumber": "L3",
+            "rowNumber": 1,
+            "columnNumber": 3,
+            "deck": "Lower",
+            "seatType": "Sleeper",
+            "price": 1899,
+            "status": "Available",
+            "isLadiesOnly": true,
+            "isWindowSeat": true,
+            "position": {
+              "row": 1,
+              "column": 3,
+              "side": "Right"
+            }
+          },
+          {
+            "seatId": "SEAT_L4",
+            "seatNumber": "L4",
+            "rowNumber": 2,
+            "columnNumber": 1,
+            "deck": "Lower",
+            "seatType": "Sleeper",
+            "price": 1899,
+            "status": "Booked",
+            "isLadiesOnly": false,
+            "isWindowSeat": true,
+            "bookedBy": "Hidden",
+            "position": {
+              "row": 2,
+              "column": 1,
+              "side": "Left"
+            }
+          }
+        ]
+      },
+      {
+        "deckType": "Upper",
+        "totalSeats": 16,
+        "availableSeats": 3,
+        "seats": [
+          {
+            "seatId": "SEAT_U1",
+            "seatNumber": "U1",
+            "rowNumber": 1,
+            "columnNumber": 1,
+            "deck": "Upper",
+            "seatType": "Premium Sleeper",
+            "price": 2199,
+            "status": "Available",
+            "isLadiesOnly": false,
+            "isWindowSeat": true,
+            "isPremium": true,
+            "position": {
+              "row": 1,
+              "column": 1,
+              "side": "Left"
+            }
+          }
+        ]
+      }
+    ],
+    "lastUpdated": "2025-11-05T16:00:00Z"
+  }
+}
+
+================================================================================
+4. SEAT LOCKING/RESERVATION APIS
+================================================================================
+
+4.1 LOCK SEATS (TEMPORARY RESERVATION)
+────────────────────────────────────────────────────────────────────────────
+Endpoint: POST /api/seats/lock
+Description: Temporarily lock seats for a user (10 minutes timeout)
+Headers: Authorization: Bearer {token}
+
+Request Payload:
+{
+  "busId": "BUS_RL_001",
+  "journeyDate": "2025-11-06",
+  "seatIds": ["SEAT_L1", "SEAT_L2"],
+  "boardingPointId": "BP_001",
+  "droppingPointId": "DP_001"
+}
+
+Response (200 OK):
+{
+  "success": true,
+  "message": "Seats locked successfully",
+  "data": {
+    "lockId": "LOCK_20251106_001",
+    "sessionId": "SESSION_ABC123XYZ",
+    "busId": "BUS_RL_001",
+    "journeyDate": "2025-11-06",
+    "lockedSeats": [
+      {
+        "seatId": "SEAT_L1",
+        "seatNumber": "L1",
+        "price": 1899
+      },
+      {
+        "seatId": "SEAT_L2",
+        "seatNumber": "L2",
+        "price": 1899
+      }
+    ],
+    "boardingPoint": {
+      "pointId": "BP_001",
+      "name": "Mumbai Central Station",
+      "time": "06:30:00"
+    },
+    "droppingPoint": {
+      "pointId": "DP_001",
+      "name": "Pune Railway Station",
+      "time": "10:00:00"
+    },
+    "lockExpiresAt": "2025-11-05T16:10:00Z",
+    "lockDurationSeconds": 600,
+    "priceBreakdown": {
+      "baseFare": 3798,
+      "taxes": 190,
+      "serviceFee": 50,
+      "discount": 0,
+      "totalAmount": 4038
+    }
+  }
+}
+
+Response (409 Conflict) - Seats Already Locked:
+{
+  "success": false,
+  "message": "One or more seats are already locked or booked",
+  "errors": [
+    {
+      "seatId": "SEAT_L1",
+      "seatNumber": "L1",
+      "status": "LockedByAnotherUser",
+      "lockedUntil": "2025-11-05T16:08:00Z"
+    }
+  ]
+}
+
+────────────────────────────────────────────────────────────────────────────
+
+4.2 EXTEND SEAT LOCK
+────────────────────────────────────────────────────────────────────────────
+Endpoint: POST /api/seats/lock/extend
+Description: Extend the lock duration by additional 5 minutes
+Headers: Authorization: Bearer {token}
+
+Request Payload:
+{
+  "lockId": "LOCK_20251106_001",
+  "sessionId": "SESSION_ABC123XYZ"
+}
+
+Response (200 OK):
+{
+  "success": true,
+  "message": "Lock extended successfully",
+  "data": {
+    "lockId": "LOCK_20251106_001",
+    "newExpiryTime": "2025-11-05T16:15:00Z",
+    "remainingSeconds": 900
+  }
+}
+
+────────────────────────────────────────────────────────────────────────────
+
+4.3 RELEASE SEAT LOCK
+────────────────────────────────────────────────────────────────────────────
+Endpoint: POST /api/seats/lock/release
+Description: Manually release locked seats before timeout
+Headers: Authorization: Bearer {token}
+
+Request Payload:
+{
+  "lockId": "LOCK_20251106_001",
+  "sessionId": "SESSION_ABC123XYZ"
+}
+
+Response (200 OK):
+{
+  "success": true,
+  "message": "Seats released successfully",
+  "data": {
+    "lockId": "LOCK_20251106_001",
+    "releasedSeats": ["SEAT_L1", "SEAT_L2"],
+    "releasedAt": "2025-11-05T16:05:00Z"
+  }
+}
+
+────────────────────────────────────────────────────────────────────────────
+
+4.4 CHECK LOCK STATUS
+────────────────────────────────────────────────────────────────────────────
+Endpoint: GET /api/seats/lock/{lockId}/status
+Description: Check current status of seat lock
+Headers: Authorization: Bearer {token}
+
+Response (200 OK):
+{
+  "success": true,
+  "message": "Lock status retrieved",
+  "data": {
+    "lockId": "LOCK_20251106_001",
+    "status": "Active",
+    "lockedSeats": ["SEAT_L1", "SEAT_L2"],
+    "expiresAt": "2025-11-05T16:10:00Z",
+    "remainingSeconds": 420,
+    "canExtend": true
+  }
+}
+
+================================================================================
+5. BOOKING APIS
+================================================================================
+
+5.1 CREATE BOOKING
+────────────────────────────────────────────────────────────────────────────
+Endpoint: POST /api/bookings/create
+Description: Create a booking after seat lock
+Headers: Authorization: Bearer {token}
+
+Request Payload:
+{
+  "lockId": "LOCK_20251106_001",
+  "sessionId": "SESSION_ABC123XYZ",
+  "passengers": [
+    {
+      "seatId": "SEAT_L1",
+      "name": "Rajesh Kumar",
+      "age": 35,
+      "gender": "Male",
+      "email": "rajesh.kumar@email.com",
+      "phoneNumber": "+919876543210",
+      "idProofType": "Aadhaar",
+      "idProofNumber": "1234-5678-9012"
+    },
+    {
+      "seatId": "SEAT_L2",
+      "name": "Priya Kumar",
+      "age": 32,
+      "gender": "Female",
+      "email": "priya.kumar@email.com",
+      "phoneNumber": "+919876543211",
+      "idProofType": "PAN",
+      "idProofNumber": "ABCDE1234F"
+    }
+  ],
+  "contactDetails": {
+    "email": "rajesh.kumar@email.com",
+    "phoneNumber": "+919876543210",
+    "alternatePhone": "+919876543211"
+  },
+  "gstDetails": {
+    "isGstRequired": false,
+    "gstNumber": null,
+    "companyName": null
+  }
+}
+
+Response (200 OK):
+{
+  "success": true,
+  "message": "Booking created successfully",
+  "data": {
+    "bookingId": "BKG_20251106_001",
+    "pnr": "PNR123456789",
+    "status": "PaymentPending",
+    "busDetails": {
+      "busId": "BUS_RL_001",
+      "busName": "Royal Luxury Express",
+      "busNumber": "MH-01-AB-1234",
+      "journeyDate": "2025-11-06",
+      "departureTime": "06:30:00",
+      "arrivalTime": "10:00:00"
+    },
+    "routeDetails": {
+      "from": "Mumbai Central Station",
+      "to": "Pune Railway Station",
+      "boardingPoint": "Mumbai Central Station - 06:30:00",
+      "droppingPoint": "Pune Railway Station - 10:00:00"
+    },
+    "passengers": [
+      {
+        "passengerId": "PASS_001",
+        "seatNumber": "L1",
+        "name": "Rajesh Kumar",
+        "age": 35,
+        "gender": "Male"
+      },
+      {
+        "passengerId": "PASS_002",
+        "seatNumber": "L2",
+        "name": "Priya Kumar",
+        "age": 32,
+        "gender": "Female"
+      }
+    ],
+    "pricing": {
+      "baseFare": 3798,
+      "taxes": 190,
+      "serviceFee": 50,
+      "discount": 0,
+      "totalAmount": 4038,
+      "currency": "INR"
+    },
+    "paymentDetails": {
+      "paymentId": null,
+      "paymentStatus": "Pending",
+      "paymentDeadline": "2025-11-05T16:15:00Z"
+    },
+    "createdAt": "2025-11-05T16:05:00Z",
+    "expiresAt": "2025-11-05T16:15:00Z"
+  }
+}
+
+────────────────────────────────────────────────────────────────────────────
+
+5.2 GET BOOKING DETAILS
+────────────────────────────────────────────────────────────────────────────
+Endpoint: GET /api/bookings/{bookingId}
+Description: Get complete booking details
+Headers: Authorization: Bearer {token}
+
+Response (200 OK):
+{
+  "success": true,
+  "message": "Booking details retrieved",
+  "data": {
+    "bookingId": "BKG_20251106_001",
+    "pnr": "PNR123456789",
+    "status": "Confirmed",
+    "busDetails": { ... },
+    "routeDetails": { ... },
+    "passengers": [ ... ],
+    "pricing": { ... },
+    "paymentDetails": {
+      "paymentId": "PAY_20251106_001",
+      "paymentStatus": "Success",
+      "paymentMethod": "UPI",
+      "transactionId": "TXN_ABC123",
+      "paidAt": "2025-11-05T16:07:00Z"
+    },
+    "cancellationPolicy": {
+      "isRefundable": true,
+      "refundRules": [
+        {
+          "timeBeforeDeparture": "24 hours",
+          "refundPercentage": 100,
+          "cancellationFee": 0
+        },
+        {
+          "timeBeforeDeparture": "12-24 hours",
+          "refundPercentage": 75,
+          "cancellationFee": 25
+        }
+      ]
+    },
+    "ticketUrl": "https://swiftbus.com/tickets/BKG_20251106_001.pdf",
+    "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANS..."
+  }
+}
+
+================================================================================
+6. PAYMENT APIS
+================================================================================
+
+6.1 INITIATE PAYMENT
+────────────────────────────────────────────────────────────────────────────
+Endpoint: POST /api/payments/initiate
+Description: Initialize payment for a booking
+Headers: Authorization: Bearer {token}
+
+Request Payload:
+{
+  "bookingId": "BKG_20251106_001",
+  "paymentMethod": "UPI",
+  "returnUrl": "https://swiftbus.com/payment/callback"
+}
+
+Response (200 OK):
+{
+  "success": true,
+  "message": "Payment initiated",
+  "data": {
+    "paymentId": "PAY_20251106_001",
+    "orderId": "ORDER_ABC123",
+    "amount": 4038,
+    "currency": "INR",
+    "paymentGatewayUrl": "https://payment.gateway.com/pay/ORDER_ABC123",
+    "paymentToken": "pg_token_xyz789",
+    "expiresAt": "2025-11-05T16:15:00Z"
+  }
+}
+
+────────────────────────────────────────────────────────────────────────────
+
+6.2 PAYMENT CALLBACK/WEBHOOK
+────────────────────────────────────────────────────────────────────────────
+Endpoint: POST /api/payments/callback
+Description: Receive payment status from payment gateway
+
+Request Payload (from Payment Gateway):
+{
+  "orderId": "ORDER_ABC123",
+  "paymentId": "PAY_20251106_001",
+  "transactionId": "TXN_ABC123",
+  "status": "Success",
+  "amount": 4038,
+  "currency": "INR",
+  "paymentMethod": "UPI",
+  "upiId": "user@paytm",
+  "timestamp": "2025-11-05T16:07:00Z",
+  "signature": "calculated_signature_hash"
+}
+
+Response (200 OK):
+{
+  "success": true,
+  "message": "Payment processed successfully",
+  "data": {
+    "bookingId": "BKG_20251106_001",
+    "pnr": "PNR123456789",
+    "status": "Confirmed",
+    "paymentStatus": "Success",
+    "ticketUrl": "https://swiftbus.com/tickets/BKG_20251106_001.pdf"
+  }
+}
+
+================================================================================
+7. BOOKING MANAGEMENT APIS
+================================================================================
+
+7.1 CANCEL BOOKING
+────────────────────────────────────────────────────────────────────────────
+Endpoint: POST /api/bookings/{bookingId}/cancel
+Description: Cancel a confirmed booking
+Headers: Authorization: Bearer {token}
+
+Request Payload:
+{
+  "cancellationReason": "Change of plans",
+  "refundMode": "OriginalSource"
+}
+
+Response (200 OK):
+{
+  "success": true,
+  "message": "Booking cancelled successfully",
+  "data": {
+    "bookingId": "BKG_20251106_001",
+    "pnr": "PNR123456789",
+    "status": "Cancelled",
+    "cancelledAt": "2025-11-05T20:00:00Z",
+    "refundDetails": {
+      "refundAmount": 3038,
+      "cancellationFee": 1000,
+      "refundStatus": "Processing",
+      "estimatedRefundDate": "2025-11-10",
+      "refundMode": "Original Payment Method"
+    }
+  }
+}
+
+────────────────────────────────────────────────────────────────────────────
+
+7.2 GET USER BOOKINGS
+────────────────────────────────────────────────────────────────────────────
+Endpoint: GET /api/bookings/my-bookings?status={status}&page={page}&size={size}
+Description: Get all bookings for logged-in user
+Headers: Authorization: Bearer {token}
+
+Response (200 OK):
+{
+  "success": true,
+  "message": "Bookings retrieved successfully",
+  "data": {
+    "totalBookings": 15,
+    "currentPage": 1,
+    "totalPages": 2,
+    "pageSize": 10,
+    "bookings": [
+      {
+        "bookingId": "BKG_20251106_001",
+        "pnr": "PNR123456789",
+        "status": "Confirmed",
+        "journeyDate": "2025-11-06",
+        "busName": "Royal Luxury Express",
+        "route": "Mumbai to Pune",
+        "seatNumbers": ["L1", "L2"],
+        "totalAmount": 4038,
+        "bookedAt": "2025-11-05T16:05:00Z"
+      }
+    ]
+  }
+}
+
+================================================================================
+DATABASE SCHEMA NOTES
+================================================================================
+
+Key Tables:
+1. Buses - Bus master data
+2. Seats - Seat configuration per bus
+3. SeatLocks - Temporary seat locks (with TTL)
+4. Bookings - Confirmed bookings
+5. Passengers - Passenger details
+6. Payments - Payment transactions
+7. BoardingPoints - Pickup locations
+8. DroppingPoints - Drop locations
+
+SeatLocks Table (Redis/SQL):
+────────────────────────────────────────────────────────────────────────────
+{
+  "LockId": "LOCK_20251106_001",
+  "UserId": "USR_1234567890",
+  "SessionId": "SESSION_ABC123XYZ",
+  "BusId": "BUS_RL_001",
+  "JourneyDate": "2025-11-06",
+  "SeatIds": ["SEAT_L1", "SEAT_L2"],
+  "LockedAt": "2025-11-05T16:00:00Z",
+  "ExpiresAt": "2025-11-05T16:10:00Z",
+  "Status": "Active",
+  "TTL": 600
+}
+
+================================================================================
+IMPLEMENTATION NOTES
+================================================================================
+
+1. SEAT LOCKING MECHANISM (Redis + SQL)
+   - Use Redis for distributed lock management
+   - Set TTL (Time To Live) of 10 minutes on lock
+   - Background job to auto-release expired locks
+   - Use optimistic locking for concurrency control
+
+2. CONCURRENCY HANDLING
+   - Database transactions with SERIALIZABLE isolation level
+   - Redis SETNX for atomic lock operations
+   - Version stamping for conflict detection
+
+3. REAL-TIME UPDATES
+   - SignalR/WebSockets for live seat availability
+   - Server-Sent Events (SSE) for anonymous users
+   - Push notifications on booking confirmation
+
+4. CACHING STRATEGY
+   - Cache bus seat layouts (15 min expiry)
+   - Cache search results (5 min expiry)
+   - Invalidate cache on booking/cancellation
+
+5. SECURITY
+   - JWT authentication with refresh tokens
+   - Rate limiting on seat lock APIs (5 locks per minute per user)
+   - Payment signature verification
+   - PCI-DSS compliant payment integration
+
+6. MONITORING
+   - Track seat lock timeout rate
+   - Monitor payment success/failure rates
+   - Alert on high lock contention
+
+================================================================================
